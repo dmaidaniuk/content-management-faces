@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Content-management-faces : Pluggable JSF content management">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Content-management-faces</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/dmaidaniuk/content-management-faces">View on GitHub</a>
+
+          <h1 id="project_title">Content-management-faces</h1>
+          <h2 id="project_tagline">Pluggable JSF content management</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/dmaidaniuk/content-management-faces/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/dmaidaniuk/content-management-faces/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h1>
+
+<p><strong>Content Management Faces</strong> is an open-source tag library and administration interface for content management with Java Server Faces applications. </p>
+
+<h1>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h1>
+
+<ul>
+<li>a single JAR and configuration file to deploy;</li>
+<li>tag library to put content into your jsf pages;</li>
+<li>built in interface to administer your content automatically deployed under <code>your-webroot/cmf/admin/index.jsf</code>;</li>
+<li>embedded Derby database for quick startup;</li>
+<li>connect to JDBC data source of your choice by specifying JPA style configuration options.</li>
+</ul>
+
+<h1>
+<a id="status" class="anchor" href="#status" aria-hidden="true"><span class="octicon octicon-link"></span></a>Status</h1>
+
+<p>The project is currently in alpha stage. The software is fairly stable, but untested on various application servers. Currently it is working with Glassfish 3.0.1 and Tomcat 7. </p>
+
+<h1>
+<a id="details" class="anchor" href="#details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Details</h1>
+
+<p>The following steps should get you up and running. Once you're logged into the admin panel you can continue to use the in memory derby database or specify a place on the file system to persist the data.</p>
+
+<ul>
+<li>You should use servlet 3.0 container and <code>web.xml</code> version 3.0.</li>
+<li>Copy <code>cmf.jar</code> to your project's <code>WEB-INF/lib</code> directory.</li>
+<li>If you're running <code>Tomcat 7</code>, copy <code>derby-10.5.3.0_1.jar</code>, <code>eclipselink.jar</code>, and <code>javax.persistence.jar</code> to your <code>WEB-INF/lib</code> directory as well. You'll also need to deploy the JSF implementation libraries (available here: <a href="http://javaserverfaces.java.net/download.html">http://javaserverfaces.java.net/download.html</a>).</li>
+<li>Copy <code>cmf-config.xml</code> to your project's WEB-INF directory.</li>
+<li>Examples of using PostgreSQL and MySQL datasources are included in the <code>cmf-config.xml</code> file. If you wish to use one of these databases, database generation scripts are located in the scripts directory. (You'll need to supply your own jdbc jar files, i.e. <code>mysql-connector.jar</code>, in the <code>WEB-INF/lib</code> directory).</li>
+<li>If you're using an IDE, make sure it includes <code>cmf.jar</code> in its classpath so that it sees the tag library.</li>
+<li>Include the taglib in your html declaration:</li>
+</ul>
+
+<pre><code>          &lt;html xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:cmf="http://tralfamadore.net/cmf"&gt;
+</code></pre>
+
+<ul>
+<li>You can now use the content tag in your pages like this:</li>
+</ul>
+
+<pre><code>          &lt;cmf:content namespace="com.somesite" name="contentName"/&gt;
+</code></pre>
+
+<ul>
+<li>You can access the administration panel at:</li>
+</ul>
+
+<pre><code>          http://yoursite.com/yourwebroot/cmf/admin/index.jsf
+</code></pre>
+
+<ul>
+<li>The administration panel will prompt you to specify a place on the file system to persist the content data. If you wish to use the in memory database you can ignore this, but your data will not be persisted between deployments or restarts. </li>
+</ul>
+
+<p><strong>Note:</strong> Currently, the package has only been verified with <code>Glassfish v3.0.1</code> and <code>Tomcat 7</code>. There is no <code>JBoss 6</code> support as of yet.</p>
+
+<p><strong>Author:</strong> Bill Reh (<a href="http://content-management-faces.blogspot.com/">http://content-management-faces.blogspot.com/</a>)</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Content-management-faces maintained by <a href="https://github.com/dmaidaniuk">dmaidaniuk</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
