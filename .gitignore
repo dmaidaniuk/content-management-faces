@@ -28,3 +28,4 @@ rebel.xml
 *.ldb
 *~
 *.swp
+nbactions.xml
