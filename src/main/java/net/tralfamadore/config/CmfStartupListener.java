@@ -22,6 +22,8 @@ package net.tralfamadore.config;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.SystemEvent;
 import javax.faces.event.SystemEventListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * User: billreh
@@ -29,6 +31,9 @@ import javax.faces.event.SystemEventListener;
  * Time: 10:00 AM
  */
 public class CmfStartupListener implements SystemEventListener {
+    
+    private static final Logger log = LoggerFactory.getLogger(CmfStartupListener.class);
+    
     @Override
     public void processEvent(SystemEvent systemEvent) throws AbortProcessingException {
         CmfContext cmfContext = CmfContext.getInstance();
@@ -37,6 +42,7 @@ public class CmfStartupListener implements SystemEventListener {
             cmfContext.setConfigFile(configFile);
             cmfContext.setInitialized(true);
         }
+        log.info("Content Management Faces started");
     }
 
     @Override

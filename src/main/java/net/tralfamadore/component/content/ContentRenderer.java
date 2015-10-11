@@ -24,6 +24,7 @@ import net.tralfamadore.cmf.Namespace;
 import net.tralfamadore.config.CmfContext;
 
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.FacesRenderer;
@@ -35,8 +36,12 @@ import java.io.IOException;
  * Date: 1/19/11
  * Time: 3:01 AM
  */
-@FacesRenderer(rendererType = "Content", componentFamily = "javax.faces.Output")
+@FacesRenderer(rendererType = ContentRenderer.RENDERER_TYPE, componentFamily = UIOutput.COMPONENT_TYPE)
 public class ContentRenderer extends Renderer {
+    
+    /** The standard renderer type. */
+    public static final String RENDERER_TYPE = "net.tralfamadore.ContentRenderer";
+    
     protected ContentManager contentManager;
     private String content;
 

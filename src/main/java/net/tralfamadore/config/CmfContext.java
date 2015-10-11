@@ -20,7 +20,6 @@
 package net.tralfamadore.config;
 
 import net.tralfamadore.cmf.ContentManager;
-//import net.tralfamadore.cmf.TestContentManager;
 import net.tralfamadore.persistence.EntityManagerProvider;
 import net.tralfamadore.security.SecurityType;
 

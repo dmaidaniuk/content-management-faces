@@ -26,8 +26,8 @@
     <tag>
         <tag-name>content</tag-name>
         <component>
-            <component-type>Content</component-type>
-            <renderer-type>ContentRenderer</renderer-type>
+            <component-type>net.tralfamadore.component.content.Content</component-type>
+            <renderer-type>net.tralfamadore.ContentRenderer</renderer-type>
         </component>
         <attribute>
             <name>name</name>

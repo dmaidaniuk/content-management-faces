@@ -57,11 +57,7 @@ public class Content extends Template {
         Content content = (Content) o;
 
         if (dateCreated != null ? !dateCreated.equals(content.dateCreated) : content.dateCreated != null) return false;
-        //noinspection RedundantIfStatement
-        if (dateModified != null ? !dateModified.equals(content.dateModified) : content.dateModified != null)
-            return false;
-
-        return true;
+        return !(dateModified != null ? !dateModified.equals(content.dateModified) : content.dateModified != null);
     }
 
     @Override

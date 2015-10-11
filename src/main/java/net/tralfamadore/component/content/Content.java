@@ -39,9 +39,13 @@ import javax.faces.event.PostAddToViewEvent;
  * Date: 1/19/11
  * Time: 3:00 AM
  */
-@FacesComponent(value = "Content")
+@FacesComponent(Content.COMPONENT_TYPE)
 @ListenerFor(systemEventClass = PostAddToViewEvent.class)
 public class Content extends HtmlOutputText {
+    
+    /** The standard component type. */
+    public static final String COMPONENT_TYPE = "net.tralfamadore.component.content.Content";
+    
     protected ContentManager contentManager;
 
     protected enum PropertyKeys {
