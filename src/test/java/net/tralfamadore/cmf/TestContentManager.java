@@ -19,13 +19,13 @@
 
 package net.tralfamadore.cmf;
 
+import java.util.ArrayList;
 import net.tralfamadore.persistence.entity.GroupEntity;
 
 import javax.enterprise.inject.Alternative;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * User: billreh
@@ -37,16 +37,16 @@ import java.util.Vector;
 @Alternative
 public class TestContentManager implements ContentManager {
     /** list of all namespaces */
-    private final List<Namespace> namespaces = new Vector<Namespace>();
+    private final List<Namespace> namespaces = new ArrayList<>();
 
     /** list of all content */
-    private final List<Content> contentList = new Vector<Content>();
+    private final List<Content> contentList = new ArrayList<>();
 
     /** list of all scripts */
-    private final List<Script> scripts = new Vector<Script>();
+    private final List<Script> scripts = new ArrayList<>();
 
     /** list of all styles */
-    private final List<Style> styles = new Vector<Style>();
+    private final List<Style> styles = new ArrayList<>();
 
     /**
      * A private class to hold our single INSTANCE.
@@ -79,7 +79,7 @@ public class TestContentManager implements ContentManager {
      */
     @Override
     public List<Namespace> loadNamespace(Namespace namespace) {
-        List<Namespace> namespacesForNamespace = new Vector<Namespace>();
+        List<Namespace> namespacesForNamespace = new ArrayList<>();
 
         for(Namespace n : namespaces) {
                 namespacesForNamespace.add(n);
@@ -144,7 +144,7 @@ public class TestContentManager implements ContentManager {
      */
     @Override
     public List<Content> loadContent(Namespace namespace) {
-        List<Content> contentForNamespace = new Vector<Content>();
+        List<Content> contentForNamespace = new ArrayList<>();
 
         for(Content content : contentList)
             if(namespace.equals(content.getNamespace()))
@@ -209,7 +209,7 @@ public class TestContentManager implements ContentManager {
      */
     @Override
     public List<Script> loadScript(Namespace namespace) {
-        List<Script> scriptsForNamespace = new Vector<Script>();
+        List<Script> scriptsForNamespace = new ArrayList<>();
 
         for(Script script : scripts)
             if(namespace.equals(script.getNamespace()))
@@ -274,7 +274,7 @@ public class TestContentManager implements ContentManager {
      */
     @Override
     public List<Style> loadStyle(Namespace namespace) {
-        List<Style> stylesForNamespace = new Vector<Style>();
+        List<Style> stylesForNamespace = new ArrayList<>();
 
         for(Style style : styles)
             if(namespace.equals(style.getNamespace()))

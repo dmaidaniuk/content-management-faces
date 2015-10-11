@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (c) 2011 Bill Reh.
   ~
@@ -16,34 +15,26 @@
   ~
   ~ You should have received a copy of the GNU Lesser General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>
-  -->
+-->
 
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xml:lang="en" lang="en">
-<f:view contentType="text/html">
-    <h:body>
-        <ui:composition>
-            <div class="clear"></div>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
 
-            <p:dialog closable="true" draggable="true" modal="true" dynamic="true" showEffect="blind"
-                      header="Add Namespace" widgetVar="addNamespace" hideEffect="blind" id="addNamespaceDialog">
-                <h:outputLabel for="namespaceName" value="Namespace name: " style="font-weight: bold;"/>
-                <p:spacer width="10px"/>
-                <h:outputText value="#{pageContent.namespace.fullName}."
-                        rendered="#{(pageContent.namespace != null) and (pageContent.namespace.nodeName != null) and (!pageContent.addingTopLevelNamespace)}"
-                        /><p:inputText id="namespaceName" value="#{adminController.newNamespace}" onkeydown="return preenInput(event)"/><br/>
-                <p:spacer height="20px"/>
-                <ui:include src="dialogGroups.xhtml"/>
-                <p:commandButton value="Save" onclick="addNamespace.hide()" actionListener="#{adminController.saveNewNamespace}"
-                        update="@form"/>
-            </p:dialog>
+  <div class="clear"></div>
 
-        </ui:composition>
-    </h:body>
-</f:view>
-</html>
+  <p:dialog closable="true" draggable="true" modal="true" dynamic="true" showEffect="blind"
+            header="Add Namespace" widgetVar="addNamespace" hideEffect="blind" id="addNamespaceDialog">
+    <h:outputLabel for="namespaceName" value="Namespace name: " style="font-weight: bold;"/>
+    <p:spacer width="10px"/>
+    <h:outputText value="#{pageContent.namespace.fullName}."
+                  rendered="#{(pageContent.namespace != null) and (pageContent.namespace.nodeName != null) and (!pageContent.addingTopLevelNamespace)}" />
+    <p:inputText id="namespaceName" value="#{adminController.newNamespace}" onkeydown="return preenInput(event)"/><br/>
+    <p:spacer height="20px"/>
+    <ui:include src="dialogGroups.xhtml"/>
+    <p:commandButton value="Save" onclick="PF('addNamespace').hide();" actionListener="#{adminController.saveNewNamespace}"
+                     update="@form"/>
+  </p:dialog>
+
+</ui:composition>

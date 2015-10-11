@@ -20,7 +20,7 @@
 package net.tralfamadore.config;
 
 import net.tralfamadore.cmf.ContentManager;
-import net.tralfamadore.cmf.TestContentManager;
+//import net.tralfamadore.cmf.TestContentManager;
 import net.tralfamadore.persistence.EntityManagerProvider;
 import net.tralfamadore.security.SecurityType;
 
@@ -105,15 +105,15 @@ public class CmfContext {
     }
 
     public ContentManager getContentManager() {
-        if(contentManager == null) {
+        if (contentManager == null) {
             String contentManagerName = configFile.getContentManager();
 
             try {
-                contentManager =
-                        (ContentManager) getClass().getClassLoader().loadClass(contentManagerName).newInstance();
-            } catch(Exception e) {
+                contentManager = (ContentManager) getClass().getClassLoader().loadClass(contentManagerName).newInstance();
+            }
+            catch (Exception e) {
                 e.printStackTrace();
-                contentManager = TestContentManager.getInstance();
+//                contentManager = TestContentManager.getInstance();
             }
         }
 

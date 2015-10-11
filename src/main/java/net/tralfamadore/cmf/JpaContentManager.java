@@ -23,19 +23,19 @@ import net.tralfamadore.config.CmfContext;
 import net.tralfamadore.persistence.EntityManagerProvider;
 import net.tralfamadore.persistence.entity.*;
 
-import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.*;
+import javax.enterprise.context.ApplicationScoped;
 
 /**
  * User: billreh
  * Date: 2/1/11
  * Time: 1:15 PM
  */
-@Alternative
+@ApplicationScoped
 public class JpaContentManager implements ContentManager {
     private final EntityManagerProvider entityManagerProvider = CmfContext.getInstance().getEntityManagerProvider();
     private EntityManager em = entityManagerProvider.get();
@@ -197,8 +197,7 @@ public class JpaContentManager implements ContentManager {
 
 
     private void makeGroupPermissionsEntity(NamespaceEntity namespaceEntity,
-                                            List<GroupPermissions> groupPermissionsList)
-    {
+                                            List<GroupPermissions> groupPermissionsList) {
         if(groupPermissionsList.isEmpty()) {
             if(namespaceEntity.getGroupPermissions() != null)
                 namespaceEntity.getGroupPermissions().clear();
@@ -226,8 +225,7 @@ public class JpaContentManager implements ContentManager {
     }
 
     private void clearOldGroupPermissions(Set<GroupPermissionsEntity> groupPermissionsEntities,
-                                          List<GroupPermissions> groupPermissionsList)
-    {
+                                          List<GroupPermissions> groupPermissionsList) {
         if(groupPermissionsEntities == null)
             return;
         for(Iterator<GroupPermissionsEntity> it = groupPermissionsEntities.iterator(); it.hasNext(); ) {

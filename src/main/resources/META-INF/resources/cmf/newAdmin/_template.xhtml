@@ -16,7 +16,7 @@
   ~
   ~ You should have received a copy of the GNU Lesser General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>
-  -->
+-->
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -25,50 +25,51 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xml:lang="en" lang="en">
-<f:view contentType="text/html">
+  
+  <f:view contentType="text/html" locale="en">
     <h:head>
-        <title>Content Management Faces</title>
-        <h:outputScript library="javax.faces" name="jsf.js"/>
-        <h:outputStylesheet library="css/960" name="text.css"/>
-        <h:outputStylesheet library="css/960" name="960.css"/>
-        <h:outputStylesheet library="cmf/admin" name="admin.css"/>
-        <h:outputScript library="cmf/admin" name="admin.js"/>
-
-        <h:outputScript library="cmf/CodeMirror-2.15/lib" name="codemirror.js"/>
-        <h:outputStylesheet library="cmf/CodeMirror-2.15/lib" name="codemirror.css"/>
-        <h:outputScript library="cmf/CodeMirror-2.15/mode/css" name="css.js"/>
-        <h:outputStylesheet library="cmf/CodeMirror-2.15/theme" name="default.css"/>
-        <style type="text/css">
-            .zero table {
-                margin-bottom: 0;
-            }
-        </style>
+      <title>Content Management Faces</title>
+      <h:outputScript library="javax.faces" name="jsf.js"/>
+      <h:outputStylesheet library="css/960" name="text.css"/>
+      <h:outputStylesheet library="css/960" name="960.css"/>
+      <h:outputStylesheet library="cmf/admin" name="admin.css"/>
+      <h:outputScript library="cmf/admin" name="admin.js"/>
+      
+      <h:outputScript library="cmf/codemirror" name="lib/codemirror.js"/>
+      <h:outputStylesheet library="cmf/codemirror" name="lib/codemirror.css"/>
+      <h:outputScript library="cmf/codemirror" name="mode/modes.js"/>
+      <h:outputStylesheet library="cmf/codemirror" name="theme/eclipse.css"/>
+      <style type="text/css">
+        .zero table {
+          margin-bottom: 0;
+        }
+      </style>
     </h:head>
     <h:body style="background-color: #e4f1fb;">
-        <div class="container_16" style="margin-top: 20px; min-height: 800px;">
-            <h:form styleClass="formClass">
-                <div class="grid_16" style="text-align: center; height: 100px; background-color: #74b2e2; border-radius: 15px; margin-bottom: 10px;">
-                    <h1 style="padding-top: 10px;">Content Management Faces</h1>
-                    <div style="display: inline-block; position: relative; bottom: 25px;">
-                        <p:messages id="messages"/>
-                    </div>
-                </div>
-                <div class="clear"></div>
+      <div class="container_16" style="margin-top: 20px; min-height: 800px;">
+        <h:form styleClass="formClass">
+          <div class="grid_16" style="text-align: center; height: 100px; background-color: #74b2e2; border-radius: 15px; margin-bottom: 10px;">
+            <h1 style="padding-top: 10px;">Content Management Faces</h1>
+            <div style="display: inline-block; position: relative; bottom: 25px;">
+              <p:messages id="messages"/>
+            </div>
+          </div>
+          <div class="clear"></div>
 
-                <div class="grid_5" style="background-color: #74b2e2; border-radius: 15px; height: 100%; min-height: 700px;">
-                    <ui:include src="tree.xhtml"/>
-                </div>
-                <div id="actionArea" class="grid_11" style="background-color: #74b2e2; border-radius: 15px; height: 100%; min-height: 700px;">
-                    <ui:insert name="body">Body</ui:insert>
-                </div>
-                <div class="clear"></div>
+          <div class="grid_5" style="background-color: #74b2e2; border-radius: 15px; height: 100%; min-height: 700px;">
+            <ui:include src="tree.xhtml"/>
+          </div>
+          <div id="actionArea" class="grid_11" style="background-color: #74b2e2; border-radius: 15px; height: 100%; min-height: 700px;">
+            <ui:insert name="body">Body</ui:insert>
+          </div>
+          <div class="clear"></div>
 
-                <ui:include src="addNamespace.xhtml"/>
-                <ui:include src="addContent.xhtml"/>
-                <ui:include src="addStyle.xhtml"/>
-            </h:form>
-        </div>
-        <p:spacer height="120px"/>
+          <ui:include src="addNamespace.xhtml"/>
+          <ui:include src="addContent.xhtml"/>
+          <ui:include src="addStyle.xhtml"/>
+        </h:form>
+      </div>
+      <p:spacer height="120px"/>
     </h:body>
-</f:view>
+  </f:view>
 </html>

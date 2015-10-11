@@ -40,21 +40,26 @@ import javax.inject.Named;
 import java.io.File;
 import java.util.*;
 import org.omnifaces.util.Faces;
+import org.omnifaces.util.Messages;
 
 /**
  * User: billreh
  * Date: 10/11/11
  * Time: 8:41 PM
  */
-@Named("adminController")
+@Named
 @RequestScoped
 public class AdminController {
+    
     @Inject
     PageContent pageContent;
+    
     @Inject
     private TheTree theTree;
+    
     @Inject
     private ContentHolder contentHolder;
+    
     @Inject
     private ContentManager contentManager;
 
@@ -146,7 +151,7 @@ public class AdminController {
         pageContent.setAddingContent(false);
         pageContent.getNamespaceContents().add(content);
         theTree.createTreeModel();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+        Messages.add(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Content " + content.getFullName() + " added.", ""));
     }
 
@@ -159,7 +164,7 @@ public class AdminController {
         pageContent.setAddingStyle(false);
         pageContent.getNamespaceContents().add(style);
         theTree.createTreeModel();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+        Messages.add(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Style " + style.getFullName() + " added.", ""));
     }
 
@@ -200,14 +205,14 @@ public class AdminController {
     public void saveContent() {
         Content content = pageContent.getContent();
         contentManager.saveContent(content);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+        Messages.add(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Content " + content.getName() + " saved successfully.", ""));
     }
 
     public void saveStyle() {
         Style style = pageContent.getStyle();
         contentManager.saveStyle(style);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+        Messages.add(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Style " + style.getName() + " saved successfully.", ""));
     }
 
@@ -287,7 +292,7 @@ public class AdminController {
         properties.put("javax.persistence.jdbc.url", jdbc + derbyPath + props);
 
         if(!file.getParentFile().exists()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+            Messages.add(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Invalid path: " + derbyPath + ".  Directory " + file.getParentFile().getAbsolutePath()
                             + " does not exist.", null));
             derbyPath = null;
@@ -527,16 +532,16 @@ public class AdminController {
         if(null != type)
             switch (type) {
             case "namespace":
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                Messages.add(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "Namespace [" + incomingNamespace + "] not found.", null));
                 break;
             case "content":
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                Messages.add(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "Content for namespace [" + incomingNamespace + "] and " + type + " name [" +
                                 incomingContentName + "] not found.", null));
                 break;
             default:
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                Messages.add(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "Style for namespace [" + incomingNamespace + "] and " + type + " name [" +
                                 incomingContentName + "] not found.", null));
                 break;

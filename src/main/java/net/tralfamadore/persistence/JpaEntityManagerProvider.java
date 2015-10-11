@@ -59,7 +59,7 @@ public class JpaEntityManagerProvider implements EntityManagerProvider {
         if(em == null) {
             ConfigFile configFile = CmfContext.getInstance().getConfigFile();
 
-            Map<String,String> properties = new HashMap<String,String>();
+            Map<String,String> properties = new HashMap<>();
 
             for(Map.Entry<String,String> entry : configFile.getPersistenceProperties().entrySet()) {
                 properties.put(entry.getKey(), entry.getValue());

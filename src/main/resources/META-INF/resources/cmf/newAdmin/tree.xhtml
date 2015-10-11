@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (c) 2011 Bill Reh.
   ~
@@ -16,58 +15,52 @@
   ~
   ~ You should have received a copy of the GNU Lesser General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>
-  -->
+-->
 
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xml:lang="en" lang="en">
-<h:body>
-    <ui:composition>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
 
-        <p:commandButton value="New Namespace ..." style="margin-left: 20px; margin-top: 20px;" update="addNamespaceDialog"
-                         actionListener="#{adminController.addNewTopLevelNamespace}" oncomplete="addNamespace.show();"/>
+  <p:commandButton value="New Namespace ..." style="margin-left: 20px; margin-top: 20px;" update="addNamespaceDialog"
+                   actionListener="#{adminController.addNewTopLevelNamespace}" oncomplete="PF('addNamespace').show();"/>
 
 
-        <p:tree id="theTree" value="#{theTree.root}" var="node" dynamic="true" cache="false" selectionMode="single"
-                style="width: 80%; height: 80%; min-height: 423px; margin-left: 20px; margin-top: 20px;"
-                binding="#{adminController.theTreeComponent}">
+  <p:tree id="theTree" value="#{theTree.root}" var="node" dynamic="true" cache="false" selectionMode="single"
+          style="width: 80%; height: 80%; min-height: 423px; margin-left: 20px; margin-top: 20px;"
+          binding="#{adminController.theTreeComponent}">
 
-            <p:treeNode>
-                <h:outputText style="color: red;" value="#{node}"/>
-            </p:treeNode>
+    <p:treeNode>
+      <h:outputText style="color: red;" value="#{node}"/>
+    </p:treeNode>
 
-            <p:treeNode type="namespace">
-                <h:link id="theLink" outcome="pretty:namespace" includeViewParams="false">
-                    <f:param name="namespace" value="#{node.fullName}"/>
-                    <h:outputText value="#{node.nodeName}"/>
-                </h:link>
-            </p:treeNode>
+    <p:treeNode type="namespace">
+      <h:link id="theLink" outcome="pretty:namespace" includeViewParams="false">
+        <f:param name="namespace" value="#{node.fullName}"/>
+        <h:outputText value="#{node.nodeName}"/>
+      </h:link>
+    </p:treeNode>
 
-            <p:treeNode type="content" styleClass=" tree-node-content">
-                <h:link outcome="pretty:content" style="font-weight: bold;">
-                    <f:param name="namespace" value="#{node.namespace.fullName}"/>
-                    <f:param name="contentName" value="#{node.name}"/>
-                    <h:outputText value="#{node.name}"/>
-                </h:link>
-            </p:treeNode>
+    <p:treeNode type="content" styleClass=" tree-node-content">
+      <h:link outcome="pretty:content" style="font-weight: bold;">
+        <f:param name="namespace" value="#{node.namespace.fullName}"/>
+        <f:param name="contentName" value="#{node.name}"/>
+        <h:outputText value="#{node.name}"/>
+      </h:link>
+    </p:treeNode>
 
-            <p:treeNode type="style" styleClass=" tree-node-style">
-                <p:outputPanel>
-                    <p:draggable snap="true" revert="true" helper="clone" zindex="777" widgetVar="dragger"/>
-                    <h:link outcome="pretty:style">
-                        <f:param name="namespace" value="#{node.namespace.fullName}"/>
-                        <f:param name="styleName" value="#{node.name}"/>
-                        <h:outputText value="#{node.name}"/>
-                    </h:link>
-                </p:outputPanel>
-            </p:treeNode>
+    <p:treeNode type="style" styleClass=" tree-node-style">
+      <p:outputPanel>
+        <p:draggable snap="true" revert="true" helper="clone" zindex="777" widgetVar="dragger"/>
+        <h:link outcome="pretty:style">
+          <f:param name="namespace" value="#{node.namespace.fullName}"/>
+          <f:param name="styleName" value="#{node.name}"/>
+          <h:outputText value="#{node.name}"/>
+        </h:link>
+      </p:outputPanel>
+    </p:treeNode>
 
-        </p:tree>
+  </p:tree>
 
-    </ui:composition>
-</h:body>
-</html>
+</ui:composition>

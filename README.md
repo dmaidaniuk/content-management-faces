@@ -44,4 +44,4 @@ The following steps should get you up and running. Once you're logged into the a
 
 **Note:** Currently, the package has only been verified with `Glassfish v3.0.1` and `Tomcat 7`. There is no `JBoss 6` support as of yet.
 
-**Author:** Bill Reh (http://content-management-faces.blogspot.com/)
+Originally created by: **Bill Reh** (http://content-management-faces.blogspot.com/)

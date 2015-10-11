@@ -19,6 +19,7 @@
 
 package net.tralfamadore.admin;
 
+import net.tralfamadore.cmf.TestContentManager;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
@@ -49,7 +50,7 @@ import javax.inject.Inject;
 import java.io.File;
 import java.util.*;
 
-import static junit.framework.Assert.*;
+import static org.junit.Assert.*;
 import org.primefaces.component.editor.Editor;
 
 /**
