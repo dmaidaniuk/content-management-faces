@@ -19,9 +19,10 @@
 
 package net.tralfamadore.component.content;
 
+import net.tralfamadore.component.DynamicResourceLoader;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseWriter;
 import javax.faces.render.FacesRenderer;
 import javax.faces.render.Renderer;
 import java.io.IOException;
@@ -33,29 +34,18 @@ import java.io.IOException;
  */
 @FacesRenderer(componentFamily = "javax.faves.Output", rendererType = "ContentResource")
 public class ContentResourceRenderer extends Renderer {
+    private static final String resourceLibrary = "cmfDynamicResources";
+
+
     @Override
     public void encodeEnd(FacesContext context, UIComponent component) throws IOException {
-        ContentResource contentResource = (ContentResource) component;
-        if("script".equals(contentResource.getType()))
-            encodeScript(context, contentResource);
-        else if("style".equals(contentResource.getType()))
-            encodeStyle(context, contentResource);
-    }
+        ContentResource content = (ContentResource) component;
+        String name = content.getNamespace().replaceAll("\\.", "-")+ "-" + content.getName() +
+                ("style".equals(content.getType()) ? ".css" : ".js");
+        String path = DynamicResourceLoader.encodeDynamicResource(context, resourceLibrary,
+                name, content.getContent());
 
-    protected void encodeStyle(FacesContext context, ContentResource component) throws IOException {
-        ResponseWriter responseWriter = context.getResponseWriter();
-        responseWriter.write("<style type=\"text/css\">");
-        responseWriter.write(component.getContent());
-        responseWriter.write("</style>");
-        responseWriter.flush();
-    }
-
-
-    protected void encodeScript(FacesContext context, ContentResource component) throws IOException {
-        ResponseWriter responseWriter = context.getResponseWriter();
-        responseWriter.write("<script type=\"text/javascript\">");
-        responseWriter.write(component.getContent());
-        responseWriter.write("</script>");
-        responseWriter.flush();
+        context.getResponseWriter().write(
+                "<link type=\"text/css\" rel=\"stylesheet\" href=\"" + path + "\"/>");
     }
 }

@@ -23,6 +23,12 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
               version="2.0">
+    <application>
+        <system-event-listener>
+            <system-event-listener-class>net.tralfamadore.config.CmfStartupListener</system-event-listener-class>
+            <system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+        </system-event-listener>
+    </application>
     <render-kit>
         <renderer>
             <component-family>javax.faces.Output</component-family>
@@ -34,10 +40,15 @@
             <renderer-type>ContentResourceRenderer</renderer-type>
             <renderer-class>net.tralfamadore.component.content.ContentResourceRenderer</renderer-class>
         </renderer>
-        <renderer>
-            <component-family>javax.faces.Output</component-family>
-            <renderer-type>TreeRenderer</renderer-type>
-            <renderer-class>net.tralfamadore.component.tree.TreeRenderer</renderer-class>
-        </renderer>
+
     </render-kit>
+
+    <navigation-rule>
+        <navigation-case>
+            <from-action>#{admin.login}</from-action>
+            <from-outcome>index</from-outcome>
+            <to-view-id>cmf/admin/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

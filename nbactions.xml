@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+  <action>
+    <actionName>CUSTOM-mci!t</actionName>
+    <displayName>mci!t</displayName>
+    <goals>
+      <goal>clean</goal>
+      <goal>install</goal>
+      <goal>-T</goal>
+      <goal>2</goal>
+    </goals>
+    <properties>
+      <skipTests>true</skipTests>
+    </properties>
+  </action>
+  <action>
+    <actionName>CUSTOM-mi!t</actionName>
+    <displayName>mi!t</displayName>
+    <goals>
+      <goal>install</goal>
+      <goal>-T</goal>
+      <goal>2</goal>
+    </goals>
+    <properties>
+      <skipTests>true</skipTests>
+    </properties>
+  </action>
+  <action>
+    <actionName>CUSTOM-mci+t</actionName>
+    <displayName>mci+t</displayName>
+    <goals>
+      <goal>clean</goal>
+      <goal>install</goal>
+      <goal>-e</goal>
+      <goal>-T</goal>
+      <goal>2</goal>
+    </goals>
+  </action>
+</actions>

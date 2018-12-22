@@ -19,6 +19,8 @@
 
 package net.tralfamadore.cmf;
 
+import org.primefaces.model.TreeNode;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
@@ -28,9 +30,10 @@ import java.util.Vector;
  * Date: 1/18/11
  * Time: 10:26 PM
  */
-public class Namespace implements Serializable {
+public class Namespace extends BaseContent implements TreeContent, Serializable {
     private String nodeName;
     private Namespace parent;
+    private TreeNode leaf;
 
 
     public static Namespace createFromString(String namespace) {
@@ -60,6 +63,17 @@ public class Namespace implements Serializable {
     }
 
 
+    @Override
+    public Namespace getNamespace() {
+        return this;
+    }
+
+    @Override
+    public void setNamespace(Namespace namespace) {
+        throw new RuntimeException("Invalid method for Namespace object");
+    }
+
+    @Override
     public String getFullName() {
         List<String> names = new Vector<String>();
         if(getNodeName() != null)
@@ -71,7 +85,7 @@ public class Namespace implements Serializable {
             p = p.parent;
         }
 
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for(int i = names.size() - 1; i > 0; i--) {
             buf.append(names.get(i)).append('.');
         }
@@ -104,7 +118,7 @@ public class Namespace implements Serializable {
             return namespaces;
 
         String[] nodes = getFullName().split("\\.");
-        Namespace cur = new Namespace(), parent = null;
+        Namespace cur, parent = null;
 
         for(String node : nodes) {
             cur = new Namespace(parent, node);
@@ -113,6 +127,16 @@ public class Namespace implements Serializable {
         }
 
         return namespaces;
+    }
+
+    @Override
+    public String getName() {
+        return nodeName;
+    }
+
+    @Override
+    public void setName(String name) {
+        throw new RuntimeException("Invalid method for Namespace object");
     }
 
     @Override
@@ -135,5 +159,15 @@ public class Namespace implements Serializable {
     @Override
     public String toString() {
         return getFullName();
+    }
+
+    @Override
+    public TreeNode getTreeNode() {
+        return leaf;
+    }
+
+    @Override
+    public void setTreeNode(TreeNode leaf) {
+        this.leaf = leaf;
     }
 }

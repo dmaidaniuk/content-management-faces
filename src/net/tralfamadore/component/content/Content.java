@@ -19,7 +19,11 @@
 
 package net.tralfamadore.component.content;
 
-import net.tralfamadore.cmf.*;
+import net.tralfamadore.cmf.ContentManager;
+import net.tralfamadore.cmf.Namespace;
+import net.tralfamadore.cmf.Script;
+import net.tralfamadore.cmf.Style;
+import net.tralfamadore.config.CmfContext;
 
 import javax.faces.application.Application;
 import javax.faces.component.FacesComponent;
@@ -29,7 +33,6 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.event.ListenerFor;
 import javax.faces.event.PostAddToViewEvent;
-import java.util.List;
 
 /**
  * User: billreh
@@ -39,42 +42,58 @@ import java.util.List;
 @FacesComponent(value = "Content")
 @ListenerFor(systemEventClass = PostAddToViewEvent.class)
 public class Content extends HtmlOutputText {
-    protected ContentManager contentManager = TestContentManager.getInstance();
+    protected ContentManager contentManager;
 
     protected enum PropertyKeys {
         namespace,
         name
     }
 
-    public Content() {
-        if(!((TestContentManager)contentManager).initted)
-            ((TestContentManager)contentManager).init();
+    public ContentManager getContentManager() {
+        if(contentManager == null) {
+            try {
+                contentManager = CmfContext.getInstance().getContentManager();
+            } catch (Exception e) {
+                // ignore
+            }
+        }
+        return contentManager;
     }
 
     @Override
     public void processEvent(ComponentSystemEvent event) throws AbortProcessingException {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        List<Script> scripts = contentManager.loadScriptsForContent(
-                contentManager.loadContent(Namespace.createFromString(getNamespace()), getName()));
-        for(Script resource : scripts) {
-            addResource(context, resource.getScript(), "script");
-        }
+        net.tralfamadore.cmf.Content content = getContentManager().loadContent(Namespace.createFromString(getNamespace()), getName());
 
-        List<Style> styles = contentManager.loadStylesForContent(
-                contentManager.loadContent(Namespace.createFromString(getNamespace()), getName()));
-        for(Style resource : styles) {
-            addResource(context, resource.getStyle(), "style");
+        if(content != null) {
+            for(Script resource : content.getScripts()) {
+                addResource(context, resource);
+            }
+
+            for(Style resource : content.getStyles()) {
+                addResource(context, resource);
+            }
         }
     }
 
-    private void addResource(FacesContext context, String content, String type) {
+    public void addResource(FacesContext context, Style style) {
+        addResource(context, style.getName(), style.getNamespace().getFullName(), style.getStyle(), "style");
+    }
+
+    public void addResource(FacesContext context, Script script) {
+        addResource(context, script.getName(), script.getNamespace().getFullName(), script.getScript(), "script");
+    }
+
+    private void addResource(FacesContext context, String name, String namespace, String content, String type) {
         if(content != null && ! content.isEmpty()) {
             Application application = context.getApplication();
             ContentResource contentResource = (ContentResource)
                     application.createComponent(context, "ContentResource", "ContentResourceRenderer");
             contentResource.setContent(content);
             contentResource.setType(type);
+            contentResource.setName(name);
+            contentResource.setNamespace(namespace);
             context.getViewRoot().addComponentResource(context, contentResource, "head");
         }
     }

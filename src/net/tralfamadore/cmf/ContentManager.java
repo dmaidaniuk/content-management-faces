@@ -19,17 +19,47 @@
 
 package net.tralfamadore.cmf;
 
+import net.tralfamadore.persistence.entity.GroupEntity;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * User: billreh
  * Date: 1/19/11
  * Time: 6:15 PM
+ *
+ * This interface represents the link between your content and the outside world.  It is where the content is retrieved
+ * from /written to the data store.
  */
-public interface ContentManager {
+public interface ContentManager extends Serializable {
+    /**
+     * Load a list of all namespaces.
+     *
+     * @return List of all of the {@link Namespace} objects.
+     */
     public List<Namespace> loadAllNamespaces();
+
+    /**
+     * Load a list of all namespaces under and including <code>namespace</code>.
+     * @param namespace The {@link Namespace} object to search under.
+     *
+     * @return List of all of the {@link Namespace} objects under and including <code>namespace</code>.
+     */
     public List<Namespace> loadNamespace(Namespace namespace);
+
+    /**
+     * Save a namespace.
+     *
+     * @param namespace The namespace to save.
+     */
     public void saveNamespace(Namespace namespace);
+
+    /**
+     * Delete a namespace.
+     *
+     * @param namespace The namespace to delete.
+     */
     public void deleteNamespace(Namespace namespace);
 
     public List<Content> loadAllContent();
@@ -50,11 +80,8 @@ public interface ContentManager {
     public void saveStyle(Style style);
     public void deleteStyle(Style style);
 
-    public void associateWithContent(Content content, Script script);
-    public List<Script> loadScriptsForContent(Content content);
-    public void disassociateWithContent(Content content, Script script);
+    public void saveGroup(GroupEntity group);
+    public List<Namespace> loadChildNamespaces(Namespace namespace);
 
-    public void associateWithContent(Content content, Style style);
-    public List<Style> loadStylesForContent(Content content);
-    public void disassociateWithContent(Content content, Style style);
+    public List<String> getAllGroups();
 }

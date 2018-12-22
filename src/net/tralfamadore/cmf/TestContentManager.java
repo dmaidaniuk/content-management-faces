@@ -19,80 +19,64 @@
 
 package net.tralfamadore.cmf;
 
-import java.util.*;
+import net.tralfamadore.persistence.entity.GroupEntity;
+
+import javax.enterprise.inject.Alternative;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * User: billreh
  * Date: 1/19/11
  * Time: 6:26 PM
+ *
+ * A test implementation of the {@link ContentManager} interface which keeps all content in memory.
  */
+@Alternative
 public class TestContentManager implements ContentManager {
-    List<Namespace> namespaces = new Vector<Namespace>();
-    List<Content> contentList = new Vector<Content>();
-    List<Script> scripts = new Vector<Script>();
-    List<Style> styles = new Vector<Style>();
-    Map<String,List<Style>> styleToContent = new HashMap<String, List<Style>>();
-    Map<Content,List<Script>> scriptToContent = new HashMap<Content, List<Script>>();
-    public boolean initted = false;
+    /** list of all namespaces */
+    private final List<Namespace> namespaces = new Vector<Namespace>();
 
+    /** list of all content */
+    private final List<Content> contentList = new Vector<Content>();
+
+    /** list of all scripts */
+    private final List<Script> scripts = new Vector<Script>();
+
+    /** list of all styles */
+    private final List<Style> styles = new Vector<Style>();
+
+    /**
+     * A private class to hold our single INSTANCE.
+     */
     private static class SingletonHolder {
-        public static final TestContentManager instance = new TestContentManager();
+        public static final TestContentManager INSTANCE = new TestContentManager();
     }
 
+    /**
+     * Called to get a reference to the singleton INSTANCE.
+     *
+     * @return the INSTANCE.
+     */
     public static TestContentManager getInstance() {
-        return SingletonHolder.instance;
+        return SingletonHolder.INSTANCE;
     }
 
-    private TestContentManager() { }
+    public TestContentManager() { }
 
-    public void init() {
-        /*
-        Namespace namespace = Namespace.createFromString("net.tralfamadore.site");
-        saveNamespace(namespace);
-        namespace = new Namespace(namespace, "page1");
-        saveNamespace(namespace);
-        saveNamespace(new Namespace(namespace.getParent(), "page2"));
-
-        Content content = new Content();
-        content.setNamespace(namespace);
-        content.setName("header");
-        content.setContent("<p class=\"header\">Header</p>");
-        saveContent(content);
-        content = new Content();
-        content.setNamespace(namespace);
-        content.setName("article");
-        content.setContent("<div class=\"article\" onmouseover=\"darken();\" onmouseout=\"lighten();\">"
-                + "<p>Blah blab blah</p></div>");
-        saveContent(content);
-
-        Style style = new Style();
-        style.setNamespace(namespace);
-        style.setName("articleStyles");
-        style.setStyle(".header { font-size: 20pt; font-weight: bold; } "
-                + ".article { font-size: 12pt; } "
-                + ".articleDark { background-color: #777777 } ");
-        saveStyle(style);
-        associateWithContent(loadContent(namespace, "header"), style);
-        associateWithContent(loadContent(namespace, "article"), style);
-
-        Script script = new Script();
-        script.setNamespace(namespace);
-        script.setName("articleScripts");
-        script.setScript(" function darken() { $(\".article\").addClass(\"articleDark\"); }"
-                + " function lighten() { $(\".article\").removeClass(\"articleDark\"); }");
-        saveScript(script);
-        associateWithContent(loadContent(namespace, "article"), script);
-        */
-
-        initted = true;
-    }
-
-
+    /**
+     * @see ContentManager#loadAllNamespaces()
+     */
     @Override
     public List<Namespace> loadAllNamespaces() {
         return namespaces;
     }
 
+    /**
+     * @see ContentManager#loadNamespace(Namespace)
+     */
     @Override
     public List<Namespace> loadNamespace(Namespace namespace) {
         List<Namespace> namespacesForNamespace = new Vector<Namespace>();
@@ -117,12 +101,18 @@ public class TestContentManager implements ContentManager {
         return namespacesForNamespace;
     }
 
+    /**
+     * @see ContentManager#saveNamespace(Namespace)
+     */
     @Override
     public void saveNamespace(Namespace namespace) {
         if(!namespaces.contains(namespace))
             namespaces.add(namespace);
     }
 
+    /**
+     * @see ContentManager#deleteNamespace(Namespace)
+     */
     @Override
     public void deleteNamespace(Namespace namespace) {
         List<Content> found = loadContent(namespace);
@@ -141,11 +131,17 @@ public class TestContentManager implements ContentManager {
         }
     }
 
+    /**
+     * @see ContentManager#loadAllContent()
+     */
     @Override
     public List<Content> loadAllContent() {
         return contentList;
     }
 
+    /**
+     * @see ContentManager#loadContent(Namespace)
+     */
     @Override
     public List<Content> loadContent(Namespace namespace) {
         List<Content> contentForNamespace = new Vector<Content>();
@@ -157,6 +153,9 @@ public class TestContentManager implements ContentManager {
         return contentForNamespace;
     }
 
+    /**
+     * @see ContentManager#loadContent(Namespace, String)
+     */
     @Override
     public Content loadContent(Namespace namespace, String name) {
         for(Content content : contentList)
@@ -166,6 +165,9 @@ public class TestContentManager implements ContentManager {
         return null;
     }
 
+    /**
+     * @see ContentManager#saveContent(Content)
+     */
     @Override
     public void saveContent(Content content) {
         for(Content c : contentList) {
@@ -178,6 +180,9 @@ public class TestContentManager implements ContentManager {
         contentList.add(content);
     }
 
+    /**
+     * @see ContentManager#deleteContent(Content)
+     */
     @Override
     public void deleteContent(Content content) {
         Iterator<Content> it = contentList.iterator();
@@ -191,11 +196,17 @@ public class TestContentManager implements ContentManager {
         }
     }
 
+    /**
+     * @see ContentManager#loadAllScripts()
+     */
     @Override
     public List<Script> loadAllScripts() {
         return scripts;
     }
 
+    /**
+     * @see ContentManager#loadScript(Namespace)
+     */
     @Override
     public List<Script> loadScript(Namespace namespace) {
         List<Script> scriptsForNamespace = new Vector<Script>();
@@ -207,6 +218,9 @@ public class TestContentManager implements ContentManager {
         return scriptsForNamespace;
     }
 
+    /**
+     * @see ContentManager#loadScript(Namespace, String)
+     */
     @Override
     public Script loadScript(Namespace namespace, String name) {
         for(Script script : scripts)
@@ -216,6 +230,9 @@ public class TestContentManager implements ContentManager {
         return null;
     }
 
+    /**
+     * @see ContentManager#saveScript(Script)
+     */
     @Override
     public void saveScript(Script script) {
         for(Script s : scripts) {
@@ -228,6 +245,9 @@ public class TestContentManager implements ContentManager {
         scripts.add(script);
     }
 
+    /**
+     * @see ContentManager#deleteScript(Script)
+     */
     @Override
     public void deleteScript(Script script) {
         Iterator<Script> it = scripts.iterator();
@@ -241,11 +261,17 @@ public class TestContentManager implements ContentManager {
         }
     }
 
+    /**
+     * @see ContentManager#loadAllStyles()
+     */
     @Override
     public List<Style> loadAllStyles() {
         return styles;
     }
 
+    /**
+     * @see ContentManager#loadStyle(Namespace)
+     */
     @Override
     public List<Style> loadStyle(Namespace namespace) {
         List<Style> stylesForNamespace = new Vector<Style>();
@@ -257,6 +283,9 @@ public class TestContentManager implements ContentManager {
         return stylesForNamespace;
     }
 
+    /**
+     * @see ContentManager#loadStyle(Namespace, String)
+     */
     @Override
     public Style loadStyle(Namespace namespace, String name) {
         for(Style style : styles)
@@ -266,6 +295,9 @@ public class TestContentManager implements ContentManager {
         return null;
     }
 
+    /**
+     * @see ContentManager#saveStyle(Style)
+     */
     @Override
     public void saveStyle(Style style) {
         for(Style s : styles) {
@@ -278,6 +310,9 @@ public class TestContentManager implements ContentManager {
         styles.add(style);
     }
 
+    /**
+     * @see ContentManager#deleteStyle(Style)
+     */
     @Override
     public void deleteStyle(Style style) {
         Iterator<Style> it = styles.iterator();
@@ -286,154 +321,23 @@ public class TestContentManager implements ContentManager {
             Style c = it.next();
             if(c.getNamespace().equals(style.getNamespace()) && c.getName().equals(style.getName())) {
                 styles.remove(style);
-                return;
+                break;
             }
         }
     }
 
     @Override
-    public void associateWithContent(Content content, Script script) {
-        // First update the content object
-        for(Script s : content.getScripts()) {
-            boolean found = false;
-            if(s.getNamespace().equals(script.getNamespace()) && s.getName().equals(script.getName())) {
-                s.setScript(script.getScript());
-                found = true;
-            }
-            // need to add it
-            if(!found)
-                content.getScripts().add(script);
-        }
-
-        List<Script> scriptsForContent = scriptToContent.get(content);
-
-        // If nothing is there, put it there
-        if(scriptsForContent == null) {
-            scriptsForContent = new Vector<Script>();
-            scriptsForContent.add(script);
-            scriptToContent.put(content, scriptsForContent);
-            return;
-        }
-
-        // If it's there, update it
-        for(Script s : scriptsForContent) {
-            if(s.getNamespace().equals(script.getNamespace()) && s.getName().equals(script.getName())) {
-                s.setScript(script.getScript());
-                return;
-            }
-        }
-
-        // otherwise add it
-        scriptsForContent.add(script);
+    public void saveGroup(GroupEntity group) {
+        throw new RuntimeException("Implement me!");
     }
 
     @Override
-    public List<Script> loadScriptsForContent(Content content) {
-        List<Script> scripts = content == null ? null : scriptToContent.get(loadContent(content.getNamespace(), content.getName()));
-        return scripts == null ? new Vector<Script>() : scripts;
+    public List<Namespace> loadChildNamespaces(Namespace namespace) {
+        return null;
     }
 
     @Override
-    public void associateWithContent(Content content, Style style) {
-        // First update the content object
-        for(Style s : content.getStyles()) {
-            boolean found = false;
-            if(s.getNamespace().equals(style.getNamespace()) && s.getName().equals(style.getName())) {
-                s.setStyle(style.getStyle());
-                found = true;
-            }
-            // need to add it
-            if(!found)
-                content.getStyles().add(style);
-        }
-
-        List<Style> stylesForContent = styleToContent.get(content.getNamespace().getFullName() + '.' + content.getName());
-
-        // If nothing is there, put it there
-        if(stylesForContent == null) {
-            stylesForContent = new Vector<Style>();
-            stylesForContent.add(style);
-            styleToContent.put(content.getNamespace().getFullName() + '.' + content.getName(), stylesForContent);
-            return;
-        }
-
-        // If it's there, update it
-        for(Style s : stylesForContent) {
-            if(s.getNamespace().equals(style.getNamespace()) && s.getName().equals(style.getName())) {
-                s.setStyle(style.getStyle());
-                return;
-            }
-        }
-
-        // otherwise add it
-        stylesForContent.add(style);
-    }
-
-    @Override
-    public List<Style> loadStylesForContent(Content content) {
-        List<Style> styles = content == null ? null : styleToContent.get(content.getNamespace().getFullName() + '.' + content.getName());
-        return styles == null ? new Vector<Style>() : styles;
-    }
-
-    @Override
-    public void disassociateWithContent(Content content, Script script) {
-        // First update the content object
-        for(Script s : content.getScripts()) {
-            boolean found = false;
-            if(s.getNamespace().equals(script.getNamespace()) && s.getName().equals(script.getName())) {
-                found = true;
-            }
-            // need to remove it
-            if(found)
-                content.getScripts().remove(script);
-        }
-
-        List<Script> scriptsForContent = scriptToContent.get(content);
-
-        // it's not there
-        if(scriptsForContent == null)
-            return;
-
-        // If it's there, remove it
-        Iterator<Script> it = scriptsForContent.iterator();
-        //noinspection WhileLoopReplaceableByForEach
-        while(it.hasNext()) {
-            Script s = it.next();
-            if(s.getNamespace().equals(script.getNamespace()) && s.getName().equals(script.getName())) {
-                scriptsForContent.remove(s);
-                return;
-            }
-        }
-    }
-
-    @Override
-    public void disassociateWithContent(Content content, Style style) {
-        // First update the content object
-        for(Style s : content.getStyles()) {
-            boolean found = false;
-            if(s.getNamespace().equals(style.getNamespace()) && s.getName().equals(style.getName())) {
-                found = true;
-            }
-            // need to remove it
-            if(found)
-                content.getStyles().remove(style);
-        }
-
-        List<Style> stylesForContent = styleToContent.get(content.getNamespace().getFullName() + '.' + content.getName());
-
-        // it's not there
-        if(stylesForContent == null)
-            return;
-
-        // If it's there, remove it
-        Iterator<Style> it = stylesForContent.iterator();
-        //noinspection WhileLoopReplaceableByForEach
-        while(it.hasNext()) {
-            Style s = it.next();
-            if(s.getNamespace().equals(style.getNamespace()) && s.getName().equals(style.getName())) {
-                stylesForContent.remove(s);
-                return;
-            }
-        }
+    public List<String> getAllGroups() {
+        return Arrays.asList("cmfAdmin", "billreh", "users", "user1", "user2", "user3");
     }
 }
